@@ -41,8 +41,10 @@ def get_columns(ds):
         return
 
 def main():
+    set_base_dir =os.environ['SRC_BASE_DIR']
+    tgt_base_dir = os.environ['TGT_BASE_DIR']
 
-    for path in glob.glob('data/retail_db/*'):
+    for path in glob.glob(f'{ set_base_dir}/*'):
 
         if os.path.isdir(path):
 
@@ -52,11 +54,11 @@ def main():
 
                 df = pd.read_csv(file, names=get_columns(ds))
 
-                os.makedirs(f'data/retail_demo/{ds}', exist_ok=True)
+                os.makedirs(f'{ tgt_base_dir}/{ds}', exist_ok=True)
 
                 df.to_json(
 
-                    f'data/retail_demo/{ds}/part-{str(uuid.uuid1())}.json',
+                    f'{ tgt_base_dir}/{ds}/part-{str(uuid.uuid1())}.json',
 
                     orient='records',
 
