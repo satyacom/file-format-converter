@@ -7,6 +7,7 @@ import uuid
 import os
 
 import pandas as pd
+import logging
 
 #folder paths are hard coded
 
@@ -41,9 +42,16 @@ def get_columns(ds):
         return
 
 def main():
+    logging.basicConfig(
+        filename=  'logs/ffc.log',
+        level=logging.INFO,
+        format='%(levelname)s %(asctime)s %(message)s',
+        datefmt='%Y-%m-%d %I:%M:%S %p'
+    )
+
     set_base_dir =os.environ['SRC_BASE_DIR']
     tgt_base_dir = os.environ['TGT_BASE_DIR']
-
+    
     for path in glob.glob(f'{ set_base_dir}/*'):
 
         if os.path.isdir(path):
@@ -66,7 +74,7 @@ def main():
 
                 )
 
-                print(f'Number of records processed for {os.path.split(file)[1]} in {ds} is {df.shape[0]}')
+                logging.info(f'Number of records processed for {os.path.split(file)[1]} in {ds} is {df.shape[0]}')
 
  
 
